@@ -6,8 +6,8 @@
     (effects (font (size 0.8 0.6) (thickness 0.12)))
     (tstamp 89211360-eb65-4980-a4e9-825fc6a7b83a)
   )
-  (fp_text value "LED_SK6812MINI-E" (at 0 3) (layer "B.Fab") hide
-    (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
+  (fp_text value "LED_SK6812MINI-E" (at 0 3 180) (layer "F.Fab") hide
+    (effects (font (size 1 1) (thickness 0.15)))
     (tstamp a4d9f360-87e2-4672-ae25-064b276a60af)
   )
   (fp_poly (pts

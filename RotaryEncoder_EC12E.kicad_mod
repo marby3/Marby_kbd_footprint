@@ -8,7 +8,7 @@
     (effects (font (size 1 1) (thickness 0.15)))
     (tstamp 49527ab2-0895-4517-a860-f2b6fdab87bb)
   )
-  (fp_text value "RotaryEncoder_Alps_EC12E" (at 0 8.2625) (layer "F.Fab") hide
+  (fp_text value "RotaryEncoder_EC12E" (at 0 8.2625) (layer "F.Fab") hide
     (effects (font (size 1 1) (thickness 0.15)))
     (tstamp da64769a-e547-4da3-be2e-feae7f3d5df7)
   )
