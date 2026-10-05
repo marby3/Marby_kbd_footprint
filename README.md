@@ -10,13 +10,13 @@ Marby_kbd_footprint/
 │  ├─ Marby_Switch.pretty/      キースイッチ（MX / Choc、ホットスワップ / はんだ付け）
 │  ├─ Marby_MCU.pretty/         マイコンボード・MCU（BLE Micro Pro, Pico, RP2040）
 │  ├─ Marby_Input.pretty/       エンコーダー、ジョイスティック、光学センサー、タクトスイッチ
-│  ├─ Marby_Connector.pretty/   TRRS、FPC、ICSP、OLED 用ピンヘッダー
+│  ├─ Marby_Connector.pretty/   TRRS ジャック、FPC コネクター、ICSP ヘッダー、OLED 接続用ヘッダー
 │  ├─ Marby_Discrete.pretty/    ダイオード、LED
 │  └─ Marby_Mechanical.pretty/  ブレークアウェイタブ、フィデューシャル
 ├─ 3dmodels/
 │  ├─ keyswitch_model/          サブモジュール（キースイッチ・ソケット・スタビライザー）
 │  └─ keycap_model/             サブモジュール（キーキャップ）
-└─ tests/                       リポジトリ構成のチェックスクリプト
+└─ tests/                       リポジトリ構成のチェックスクリプト（CI 未接続・手動実行）
 ```
 
 ## KiCad への登録
@@ -83,9 +83,9 @@ git submodule update --remote
 | `ICSP` | `ICSP_2x3` | `Marby_Connector` |
 | `OLED` | `OLED_4Pin` | `Marby_Connector` |
 | `tooling_hole` | `Fiducial_1.5mm` | `Marby_Mechanical` |
-| `725996-2` | （削除） | |
-| `FC-030` | （削除） | |
-| `joystick` | （削除） | |
+| `725996-2` | （削除） | — |
+| `FC-030` | （削除） | — |
+| `joystick` | （削除） | — |
 
 上の表にないフットプリントは、名前を変えずにいずれかのライブラリへ移しています。
 
