@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 # Issue #3 の受け入れ基準を検証する。
-# 使い方: bash tests/check_layout.sh [比較元コミット (既定: d030ebb)]
+# 使い方: bash tests/check_layout.sh [比較元コミット]
+#   基準 6（中身が再編前と同一）は Issue #3 限りの確認なので、比較元コミット
+#   （再編直前の main = d030ebb）を渡したときだけ実行し、省略時は SKIP する。
+#   以降の Issue で .kicad_mod の中身を変えても、常用のチェックは RED にならない。
 # 配置表は tests/fixtures/layout.tsv（旧名<TAB>ライブラリ<TAB>新名）。
 # 判定はコミット済みの HEAD に対して行う。
+# 基準 10 は check_submodules.sh 経由でサブモジュールを GitHub から clone するため、ネットワークが必要。
 set -u
 
-BASE="${1:-d030ebb}"
+BASE="${1:-}"
 ROOT="$(git rev-parse --show-toplevel)"
 LAYOUT="$ROOT/tests/fixtures/layout.tsv"
 LIBS="Marby_Connector Marby_Discrete Marby_Input Marby_MCU Marby_Mechanical Marby_Switch"
@@ -61,12 +65,16 @@ if [ -z "$bad" ]; then pass "5 フットプリント名とファイル名が一�
 
 # 基準 6: (footprint "..." 行以外は BASE の旧ファイルと同一
 bad=""
+if [ -z "$BASE" ]; then
+  echo "SKIP  6 中身が変わっていない（比較元コミットを渡したときだけ実行）"
+else
 while IFS=$'\t' read -r old lib new; do
   git -C "$ROOT" show "$BASE:$old.kicad_mod" 2>/dev/null | grep -v '^(footprint "' > "$TMP/a"
   git -C "$ROOT" show "HEAD:footprints/$lib.pretty/$new.kicad_mod" 2>/dev/null | grep -v '^(footprint "' > "$TMP/b"
   if [ ! -s "$TMP/b" ] || ! cmp -s "$TMP/a" "$TMP/b"; then bad="$bad [$new]"; fi
 done < "$LAYOUT"
 if [ -z "$bad" ]; then pass "6 中身が変わっていない"; else ng "6 中身が変わっていない" "$bad"; fi
+fi
 
 # 基準 7〜9: README.md
 readme="$(git -C "$ROOT" show HEAD:README.md 2>/dev/null)"
@@ -85,7 +93,11 @@ missing=""
 echo "$readme" | grep -q '移行' || missing="$missing (移行手順)"
 while IFS=$'\t' read -r old lib new; do
   [ "$old" = "$new" ] && continue
-  echo "$readme" | grep -F "$old" | grep -qF "$new" || missing="$missing [$old→$new]"
+  # 旧名が新名の部分文字列になる組（ICSP→ICSP_2x3 など）があるため、表の1列目を完全一致で見る
+  echo "$readme" | awk -F'|' -v o="\`$old\`" -v n="\`$new\`" '
+    { c = $2; gsub(/^ +| +$/, "", c) }
+    c == o && index($3, n) { found = 1 }
+    END { exit !found }' || missing="$missing [$old→$new]"
 done < "$LAYOUT"
 for d in $DELETED; do
   echo "$readme" | grep -E "^\|.*\`$d\`" | grep -q '削除' || missing="$missing [$d 削除]"
@@ -93,9 +105,10 @@ done
 if [ -z "$missing" ]; then pass "9 README 移行手順と対応表"; else ng "9 README 移行手順と対応表" "不足:$missing"; fi
 
 # 基準 10: check_submodules.sh から無変更チェックが外れ、残りが PASS
-if git -C "$ROOT" show HEAD:tests/check_submodules.sh | grep -q '\.kicad_mod 無変更'; then
+# ラベルではなく、.kicad_mod の差分を取る処理そのものが残っていないかを見る
+if git -C "$ROOT" show HEAD:tests/check_submodules.sh | grep 'diff' | grep -q 'kicad_mod'; then
   ng "10 check_submodules.sh" "「.kicad_mod 無変更」チェックが残っている"
-elif out="$(bash "$ROOT/tests/check_submodules.sh" 2>&1)"; then
+elif out="$(cd "$ROOT" && bash <(git show HEAD:tests/check_submodules.sh) 2>&1)"; then
   pass "10 check_submodules.sh"
 else
   ng "10 check_submodules.sh" "$(echo "$out" | grep FAIL | tr '\n' ' ')"
