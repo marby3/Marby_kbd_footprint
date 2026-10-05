@@ -1,0 +1,6 @@
+[submodule "3dmodels/keyswitch_model"]
+	path = 3dmodels/keyswitch_model
+	url = https://github.com/koktoh/keyswitch_model.git
+[submodule "3dmodels/keycap_model"]
+	path = 3dmodels/keycap_model
+	url = https://github.com/koktoh/keycap_model.git
