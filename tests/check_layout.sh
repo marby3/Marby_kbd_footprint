@@ -71,8 +71,10 @@ if [ -z "$bad" ]; then pass "6 中身が変わっていない"; else ng "6 中�
 # 基準 7〜9: README.md
 readme="$(git -C "$ROOT" show HEAD:README.md 2>/dev/null)"
 missing=""
-for l in $LIBS; do echo "$readme" | grep -q "footprints/.*$l\.pretty\|$l\.pretty/" || missing="$missing $l"; done
-echo "$readme" | grep -qE '^[[:space:]│├└─]*footprints/' || missing="$missing (構成図に footprints/)"
+# 構成図は罫線文字を含むため、正規表現の文字クラスに入れず固定文字列で探す（msys grep が落ちる）
+tree="$(echo "$readme" | sed -n '/^## 構成/,/^## /p')"
+echo "$tree" | grep -qF 'footprints/' || missing="$missing (構成図に footprints/)"
+for l in $LIBS; do echo "$tree" | grep -qF "$l.pretty/" || missing="$missing $l"; done
 if [ -z "$missing" ]; then pass "7 README 構成図"; else ng "7 README 構成図" "不足:$missing"; fi
 
 missing=""
