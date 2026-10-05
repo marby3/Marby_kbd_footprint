@@ -7,6 +7,7 @@ set -u
 BASE="${1:-origin/main}"
 ROOT="$(git rev-parse --show-toplevel)"
 BRANCH="$(git -C "$ROOT" rev-parse --abbrev-ref HEAD)"
+HEAD_SHA="$(git -C "$ROOT" rev-parse HEAD)"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
@@ -14,25 +15,33 @@ fail=0
 pass() { echo "PASS  $1"; }
 ng()   { echo "FAIL  $1: $2"; fail=1; }
 
-# 基準 1, 2: .gitmodules への登録と固定コミット
+# 基準 1, 2: コミット済みの .gitmodules への登録と固定コミット
+gm() { git -C "$ROOT" config --blob HEAD:.gitmodules "$@" 2>/dev/null; }
 check_submodule() {
   local label="$1" path="$2" url="$3" sha="$4" name got_url got_sha
-  name="$(git -C "$ROOT" config -f .gitmodules --get-regexp '^submodule\..*\.path$' 2>/dev/null \
+  name="$(gm --get-regexp '^submodule\..*\.path$' \
     | awk -v p="$path" '$2 == p { sub(/^submodule\./, "", $1); sub(/\.path$/, "", $1); print $1 }')"
   if [ -z "$name" ]; then ng "$label" "path $path が .gitmodules にない"; return; fi
-  got_url="$(git -C "$ROOT" config -f .gitmodules "submodule.$name.url")"
+  got_url="$(gm "submodule.$name.url")"
   if [ "$got_url" != "$url" ]; then ng "$label" "url が $got_url"; return; fi
   got_sha="$(git -C "$ROOT" ls-tree HEAD "$path" | awk '$1 == "160000" { print $3 }')"
-  case "$got_sha" in
-    "$sha"*) pass "$label" ;;
-    *) ng "$label" "固定コミットが '${got_sha:-なし}'" ;;
-  esac
+  if [ "$got_sha" = "$sha" ]; then pass "$label"; else ng "$label" "固定コミットが '${got_sha:-なし}'"; fi
 }
-check_submodule "1 keyswitch_model" 3dmodels/keyswitch_model https://github.com/koktoh/keyswitch_model.git 2b6bcfa
-check_submodule "2 keycap_model"    3dmodels/keycap_model    https://github.com/koktoh/keycap_model.git    1c07721
+check_submodule "1 keyswitch_model" 3dmodels/keyswitch_model https://github.com/koktoh/keyswitch_model.git 2b6bcfac0032f1547e27b18b9a897e065e544b37
+check_submodule "2 keycap_model"    3dmodels/keycap_model    https://github.com/koktoh/keycap_model.git    1c07721aeb907068a3192256025616bcd7da8ba6
 
 # 基準 3, 4: --recurse-submodules で clone した直後にファイルがある
-if git clone -q --recurse-submodules --branch "$BRANCH" "$ROOT" "$TMP/clone" 2>"$TMP/clone.log"; then
+# detached HEAD ではブランチ名で clone できないため、clone 後に HEAD のコミットへ切り替える
+clone_head() {
+  if [ "$BRANCH" != "HEAD" ]; then
+    git clone -q --recurse-submodules --branch "$BRANCH" "$ROOT" "$TMP/clone"
+  else
+    git clone -q --recurse-submodules "$ROOT" "$TMP/clone" &&
+      git -C "$TMP/clone" checkout -q "$HEAD_SHA" &&
+      git -C "$TMP/clone" submodule update -q --init
+  fi
+}
+if clone_head 2>"$TMP/clone.log"; then
   cloned=1
 else
   cloned=0
@@ -56,7 +65,8 @@ else
   grep -q 'git submodule update --remote' "$readme"            || missing="$missing (c)上流へ更新"
   grep -q 'https://github.com/koktoh/keyswitch_model' "$readme" || missing="$missing (d)keyswitch_modelのURL"
   grep -q 'https://github.com/koktoh/keycap_model' "$readme"    || missing="$missing (d)keycap_modelのURL"
-  grep -q 'LICENSE' "$readme"                                  || missing="$missing (d)ライセンス状況"
+  grep 'keyswitch_model' "$readme" | grep -q 'LICENSE ファイルはありません' \
+                                                               || missing="$missing (d)keyswitch_modelにLICENSEがない旨"
   if [ -z "$missing" ]; then pass "5 README"; else ng "5 README" "不足:$missing"; fi
 fi
 
