@@ -1,4 +1,4 @@
-(footprint "tooling_hole" (version 20211014) (generator pcbnew)
+(footprint "Fiducial_1.5mm" (version 20211014) (generator pcbnew)
   (layer "F.Cu")
   (tedit 611B7905)
   (descr "Circular Fiducial, 1.5mm bare copper, 3mm soldermask opening")
