@@ -1,4 +1,4 @@
-(footprint "XUNPU FPC-05F-12PH20"
+(footprint "FPC_XUNPU_FPC-05F-12PH20"
 	(version 20241229)
 	(generator "pcbnew")
 	(generator_version "9.0")

@@ -1,4 +1,4 @@
-(footprint "Diode_TH&SMD"
+(footprint "Diode_TH_SMD"
 	(version 20241229)
 	(generator "pcbnew")
 	(generator_version "9.0")

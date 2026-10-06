@@ -1,4 +1,4 @@
-(footprint "RP2040-tiny"
+(footprint "Board_RP2040-Tiny"
 	(version 20240108)
 	(generator "pcbnew")
 	(generator_version "8.0")

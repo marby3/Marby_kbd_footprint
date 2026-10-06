@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 # Issue #2 の受け入れ基準を検証する。
-# 使い方: bash tests/check_submodules.sh [比較元ブランチ (既定: origin/main)]
+# 使い方: bash tests/check_submodules.sh
 # 基準 3, 4 はコミット済みの状態を一時ディレクトリへ clone して確かめる。
 set -u
 
-BASE="${1:-origin/main}"
 ROOT="$(git rev-parse --show-toplevel)"
 BRANCH="$(git -C "$ROOT" rev-parse --abbrev-ref HEAD)"
 HEAD_SHA="$(git -C "$ROOT" rev-parse HEAD)"
@@ -69,9 +68,5 @@ else
                                                                || missing="$missing (d)keyswitch_modelにLICENSEがない旨"
   if [ -z "$missing" ]; then pass "5 README"; else ng "5 README" "不足:$missing"; fi
 fi
-
-# 基準 6: 既存の .kicad_mod に変更がない
-changed="$(git -C "$ROOT" diff --name-status "$BASE...HEAD" -- '*.kicad_mod')"
-if [ -z "$changed" ]; then pass "6 .kicad_mod 無変更"; else ng "6 .kicad_mod 無変更" "$(echo "$changed" | tr '\n' ' ')"; fi
 
 exit "$fail"

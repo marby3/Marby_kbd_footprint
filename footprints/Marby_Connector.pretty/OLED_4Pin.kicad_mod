@@ -1,4 +1,4 @@
-(footprint "OLED" (version 20211014) (generator pcbnew)
+(footprint "OLED_4Pin" (version 20211014) (generator pcbnew)
   (layer "F.Cu")
   (tedit 6108D2A1)
   (descr "Connecteur 6 pins")

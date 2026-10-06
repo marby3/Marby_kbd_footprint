@@ -1,4 +1,4 @@
-(footprint "PMW3360DM-T2QU 16Pin_34mmBall"
+(footprint "OpticalMouseSensor_PMW3360DM-T2QU_34mmBall"
 	(version 20241229)
 	(generator "pcbnew")
 	(generator_version "9.0")

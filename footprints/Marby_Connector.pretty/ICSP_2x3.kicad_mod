@@ -1,4 +1,4 @@
-(footprint "ICSP" (version 20211014) (generator pcbnew)
+(footprint "ICSP_2x3" (version 20211014) (generator pcbnew)
   (layer "F.Cu")
   (tedit 60F4EFE3)
   (descr "Connecteur 6 pins")

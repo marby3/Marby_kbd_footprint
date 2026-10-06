@@ -1,4 +1,4 @@
-(footprint "microSwitch_6x6x7.3mm" (version 20221018) (generator pcbnew)
+(footprint "MicroSwitch_6x6x7.3mm" (version 20221018) (generator pcbnew)
   (layer "F.Cu")
   (attr through_hole)
   (fp_text reference "REF**" (at 0 -3.6 unlocked) (layer "F.SilkS")
