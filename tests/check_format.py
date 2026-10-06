@@ -17,6 +17,9 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import kicad_mod as K  # noqa: E402
 
+# Windows のコンソール (cp932) でも日本語を出せるようにする
+sys.stdout.reconfigure(encoding="utf-8")
+
 VERSION = "20260206"
 BASE = sys.argv[1] if len(sys.argv) > 1 else ""
 
@@ -108,7 +111,8 @@ else:
 
 # 基準 11: check_layout.sh が引き続き PASS（HEAD の版を実行）
 script = git("show", "HEAD:tests/check_layout.sh")
-r = subprocess.run(["bash", "-s"], input=script.encode("utf-8"), cwd=ROOT, capture_output=True)
+# "bash" だけを渡すと、Windows では System32 の WSL bash が先に見つかるため、PATH 上のフルパスで起動する
+r = subprocess.run([shutil.which("bash"), "-s"], input=script.encode("utf-8"), cwd=ROOT, capture_output=True)
 out = r.stdout.decode("utf-8", "replace")
 report("11 check_layout.sh", [] if r.returncode == 0 else [line for line in out.splitlines() if line.startswith("FAIL")])
 
