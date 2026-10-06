@@ -1,9 +1,9 @@
 (footprint "OpticalMouseSensor_PMW3360DM-T2QU_34mmBall"
-	(version 20241229)
+	(version 20260206)
 	(generator "pcbnew")
-	(generator_version "9.0")
+	(generator_version "10.0")
 	(layer "F.Cu")
-	(descr "PMW3360DM-T2QU special 16pin molded lead-frame DIP")
+	(descr "PixArt PMW3360DM-T2QU optical sensor, 16-pin DIP, layout for 34mm trackball")
 	(property "Reference" "U?"
 		(at 0 10.414 180)
 		(layer "B.SilkS")
@@ -16,7 +16,7 @@
 			(justify mirror)
 		)
 	)
-	(property "Value" "PMW3360DM-T2QU"
+	(property "Value" "OpticalMouseSensor_PMW3360DM-T2QU_34mmBall"
 		(at 0 0 0)
 		(layer "F.Fab")
 		(uuid "77da3f04-7844-48d2-b136-cfd80e79c5ca")
@@ -54,6 +54,7 @@
 		)
 	)
 	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
 	(fp_line
 		(start -5.187043 9.5772)
 		(end -5.187044 8.577198)
@@ -304,6 +305,20 @@
 		(layer "Edge.Cuts")
 		(uuid "986f9476-ff49-430f-ab3f-1370369abfc1")
 	)
+	(fp_text user "PMW3360DM-T2QU"
+		(at -7.366 -4.826 270)
+		(unlocked yes)
+		(layer "B.SilkS")
+		(uuid "f5968457-dd96-4103-bb86-b7b26abb982f")
+		(effects
+			(font
+				(size 1 0.8)
+				(thickness 0.16)
+				(bold yes)
+			)
+			(justify mirror)
+		)
+	)
 	(fp_text user "取付向き注意!!"
 		(at 3.786956 -9.406 0)
 		(unlocked yes)
@@ -512,20 +527,6 @@
 			)
 		)
 	)
-	(fp_text user "PMW3360DM-T2QU"
-		(at -7.366 -4.826 270)
-		(unlocked yes)
-		(layer "B.SilkS")
-		(uuid "f5968457-dd96-4103-bb86-b7b26abb982f")
-		(effects
-			(font
-				(size 1 0.8)
-				(thickness 0.16)
-				(bold yes)
-			)
-			(justify mirror)
-		)
-	)
 	(fp_text user "Optical Center"
 		(at -0.508 1.54 0)
 		(unlocked yes)
@@ -679,8 +680,6 @@
 		(uuid "6128fd43-13d8-43ce-bd2b-efb1599345d9")
 	)
 	(zone
-		(net 0)
-		(net_name "")
 		(layers "F.Cu" "B.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
 			"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "B.CrtYd"
 			"In14.Cu" "In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu"
@@ -693,7 +692,6 @@
 			(clearance 0)
 		)
 		(min_thickness 0.254)
-		(filled_areas_thickness no)
 		(keepout
 			(tracks not_allowed)
 			(vias not_allowed)
@@ -708,6 +706,7 @@
 		(fill
 			(thermal_gap 0.508)
 			(thermal_bridge_width 0.508)
+			(island_removal_mode 0)
 		)
 		(polygon
 			(pts
