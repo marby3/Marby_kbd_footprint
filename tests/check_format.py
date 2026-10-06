@@ -24,12 +24,13 @@ VERSION = "20260206"
 BASE = sys.argv[1] if len(sys.argv) > 1 else ""
 
 
+ROOT = subprocess.run(["git", "rev-parse", "--show-toplevel"], check=True, capture_output=True,
+                      text=True).stdout.strip()
+
+
 def git(*args):
     return subprocess.run(["git", "-C", ROOT, *args], check=True, capture_output=True).stdout.decode("utf-8")
 
-
-ROOT = subprocess.run(["git", "rev-parse", "--show-toplevel"], check=True, capture_output=True,
-                      text=True).stdout.strip()
 DESCR = os.path.join(ROOT, "tests", "fixtures", "descr.tsv")
 
 failed = False

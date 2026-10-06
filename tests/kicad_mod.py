@@ -20,6 +20,8 @@ def parse(text):
             node = stack.pop()
             stack[-1].append(node)
         elif tok.startswith('"'):
+            # 引用符を外し、\" や \ などのエスケープを戻す。unicode_escape は
+            # 非 ASCII を latin-1 として扱うので、latin-1 → utf-8 で元の文字に戻す
             stack[-1].append(bytes(tok[1:-1], "utf-8").decode("unicode_escape").encode("latin-1").decode("utf-8"))
         else:
             stack[-1].append(tok)
@@ -35,6 +37,9 @@ def child(node, name):
     return found[0] if found else None
 
 
+_NUMBER = re.compile(r"-?(?:[0-9]+[.]?[0-9]*|[.][0-9]+)(?:[eE][-+]?[0-9]+)?")
+
+
 def num(v):
     return round(float(v), 6)
 
@@ -43,7 +48,7 @@ def nums(node, n=None):
     """(at x y [rot]) のような子の数値部分。n を指定すると不足分を 0 で埋める。"""
     if node is None:
         return None
-    vals = [num(v) for v in node[1:] if isinstance(v, str) and re.fullmatch(r"-?[0-9.eE+-]+", v)]
+    vals = [num(v) for v in node[1:] if isinstance(v, str) and _NUMBER.fullmatch(v)]
     if n is not None:
         vals = (vals + [0.0] * n)[:n]
     return tuple(vals)
@@ -115,7 +120,8 @@ def pads(fp):
             p[1], p[2], p[3],
             nums(child(p, "at"), 3),
             nums(child(p, "size")),
-            tuple(str(v) for v in drill[1:]) if drill else (),
+            tuple(num(v) if isinstance(v, str) and _NUMBER.fullmatch(v) else repr(v) for v in drill[1:])
+            if drill else (),
             layers(p),
         ))
     return sorted(out)
@@ -126,6 +132,8 @@ _POINTS = ("start", "end", "mid", "center")
 
 
 def graphics(fp):
+    """種類・レイヤー・座標・線幅。塗り (fill) は KiCad 10 で solid→yes などと
+    表記だけ変わり、基準の比較対象でもないので見ない。"""
     out = []
     for c in fp[1:]:
         if not (isinstance(c, list) and c and c[0] in _GRAPHICS):
