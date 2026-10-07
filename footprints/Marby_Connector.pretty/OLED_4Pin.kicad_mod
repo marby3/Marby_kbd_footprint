@@ -124,15 +124,4 @@
 		(uuid "5f5aff26-fdc8-487d-b940-458f90544435")
 	)
 	(embedded_fonts no)
-	(model "${KEYBOARD}/OLED Module with Pins Soldered.step"
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
 )

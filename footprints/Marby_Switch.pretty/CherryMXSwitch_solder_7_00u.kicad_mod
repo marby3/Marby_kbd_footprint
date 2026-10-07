@@ -319,18 +319,18 @@
 		(uuid "e9686e9b-e303-4998-9844-fad52bb50a44")
 	)
 	(embedded_fonts no)
-	(model "D:/Documents/KiCad/6.0/footprints/kbd/kicad-packages3D/kbd.3dshapes/Kailh-CherryMX-Socket.step"
+	(model "${MARBY_KBD_DIR}/3dmodels/keyswitch_model/mx/silent_alpaca/KiCad/silent_alpaca.step"
 		(offset
-			(xyz -1 7.5 -3.5)
+			(xyz 0 0 0)
 		)
 		(scale
 			(xyz 1 1 1)
 		)
 		(rotate
-			(xyz 0 0 180)
+			(xyz 0 0 0)
 		)
 	)
-	(model "D:/Documents/KiCad/6.0/footprints/kbd/kicad-packages3D/kbd.3dshapes/CherryMX Switch.step"
+	(model "${MARBY_KBD_DIR}/3dmodels/keyswitch_model/stabilizer/screw_in/KiCad/stabilizer_7u.step"
 		(offset
 			(xyz 0 0 0)
 		)

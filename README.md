@@ -34,6 +34,22 @@ KiCad の「設定」→「フットプリントライブラリーを管理」�
 
 nickname は上の表のとおりにそろえておくと、ほかの PC や他人の環境でも基板のリンクがそのまま通ります。
 
+## 3D モデル
+
+スイッチ系フットプリントの 3D モデルは、サブモジュール `3dmodels/keyswitch_model` のファイルを、パス変数 `MARBY_KBD_DIR` を基準に参照しています。3D ビューアーで表示するには、次の 2 つが必要です。
+
+1. サブモジュールを取得しておく。`--recurse-submodules` を付けずに clone した場合は、リポジトリのフォルダで `git submodule update --init` を実行します（[取得方法](#取得方法) も参照）。
+2. KiCad の「設定」→「パスの設定」で、名前 `MARBY_KBD_DIR`、パスに clone したフォルダ（例: `C:/Users/<ユーザー名>/Documents/GitHub/Marby_kbd_footprint`）を追加します。
+
+| フットプリント | 3D モデル |
+|---|---|
+| `CherryMXSwitch_*` | Silent Alpaca。ホットスワップは MX 用ソケット付き、2u 以上は Screw-in スタビライザー付き |
+| `ChocSwitch_*` | Kailh Choc V1 Red。ホットスワップは Choc 用ソケット付き |
+| `RP2040-QFN-56` | KiCad 標準ライブラリの QFN-56（`${KICAD10_3DMODEL_DIR}`、設定不要） |
+| 上記以外 | なし |
+
+`CherryMXSwitch_hotswap_*` は、裏面（B 面）に置いて使う前提のフットプリントです。表面のまま 3D 表示すると、スイッチが基板の下に表示されます。
+
 ## 取得方法
 
 ### 新しく clone する

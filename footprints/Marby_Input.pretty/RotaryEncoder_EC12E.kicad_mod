@@ -506,15 +506,4 @@
 		(uuid "b570c3cc-f7aa-4c02-824e-442e17097ae9")
 	)
 	(embedded_fonts no)
-	(model "D:/Documents/KiCad/6.0/3dmodels/ec12e1220407/EC12E-150.STEP"
-		(offset
-			(xyz 0 0 1.6)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 180)
-		)
-	)
 )

@@ -139,15 +139,4 @@
 		(uuid "3cef5898-4536-4680-97d8-5fcb1776a0cc")
 	)
 	(embedded_fonts no)
-	(model "${KEYBOARD}/tact switch Soldered.step"
-		(offset
-			(xyz 0 0 3.5)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
 )

@@ -151,15 +151,4 @@
 		(uuid "0facfb2f-08bb-4918-a721-fefb6cd87ecb")
 	)
 	(embedded_fonts no)
-	(model "${KEYBOARD}/PJ320A Soldered.step"
-		(offset
-			(xyz 2.9 -8.34 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
 )

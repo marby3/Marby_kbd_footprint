@@ -159,15 +159,4 @@
 		(uuid "2496c64d-f272-451a-8663-7a94e98b4b86")
 	)
 	(embedded_fonts no)
-	(model "D:/Documents/KiCad/KiCad_Library/kbd/kicad-packages3D/kbd.3dshapes/D_SOD-123 Soldered.step"
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
 )
