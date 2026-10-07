@@ -8,10 +8,11 @@ import re
 
 import kicad_mod as K
 
-VIA_MAX_DRILL = 0.6  # これ未満のメッキ穴はビアとみなして THT の判定に数えない
+THT_MIN_DRILL = 0.6  # THT と数える最小のドリル径。これ未満のメッキ穴はビアとみなす
 MARGIN = 0.25  # スイッチ以外のコートヤードの余白
 KEY = 19.05  # 1u のキーピッチ
-BODY_LAYERS = ("F.Fab", "F.SilkS", "B.SilkS")
+# 部品外形を描いている層。OLED・ジョイスティックは外形を Dwgs.User に、Pico は USB の張り出しを B.Fab に描いている
+BODY_LAYERS = ("F.Fab", "B.Fab", "F.SilkS", "B.SilkS", "Dwgs.User")
 MECHANICAL = {
     "Breakaway_Tabs": {"board_only", "exclude_from_pos_files", "exclude_from_bom"},
     "Breakaway_Mousebite": {"board_only", "exclude_from_pos_files", "exclude_from_bom"},
@@ -38,7 +39,7 @@ def expected_attr(name, fp):
     pads = K.pads(fp)
     for p in pads:
         drills = [v for v in p[5] if isinstance(v, float)]
-        if p[1] == "thru_hole" and drills and max(drills) >= VIA_MAX_DRILL:
+        if p[1] == "thru_hole" and drills and max(drills) >= THT_MIN_DRILL:
             return {"through_hole"}
     if any(p[1] == "smd" for p in pads):
         return {"smd"}
@@ -46,10 +47,12 @@ def expected_attr(name, fp):
 
 
 def keycap_outline(name):
-    """スイッチのキーキャップ外形（頂点の列）。"""
+    """スイッチのキーキャップ外形（頂点の列）。名前からサイズを読めなければ None。"""
     if name in ISO_ENTER:
         return ISO_ENTER[name]
     m = SIZE.search(name)
+    if m is None:
+        return None
     u = int(m.group(1)) + int(m.group(2)) / 100
     w, h = KEY * u / 2, KEY / 2
     return [(-w, -h), (w, -h), (w, h), (-w, h)]
@@ -100,7 +103,7 @@ def _graphic_points(g):
 
 
 def body_rect(fp):
-    """パッドと F.Fab / F.SilkS / B.SilkS の図形を囲む矩形に余白を付け、0.01mm 単位で外側に丸めたもの。"""
+    """パッドと BODY_LAYERS の図形を囲む矩形に余白を付け、0.01mm 単位で外側に丸めたもの。"""
     pts = [pt for pad in K.pads(fp) for pt in _pad_points(pad)]
     pts += [pt for g in K.graphics(fp) if any(l in BODY_LAYERS for l in g[1]) for pt in _graphic_points(g)]
     xs, ys = [p[0] for p in pts], [p[1] for p in pts]
@@ -120,7 +123,7 @@ def edges(points):
 
 
 def courtyard_edges(fp):
-    """F.CrtYd の線・矩形・多角形の辺の集合と、円の数。"""
+    """F.CrtYd の線・矩形・多角形の辺の集合と、円の数。円弧（fp_arc）と曲線（fp_curve）には対応していない。"""
     out, circles = [], 0
     for g in K.graphics(fp):
         if g[1] != ("F.CrtYd",):

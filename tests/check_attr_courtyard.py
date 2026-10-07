@@ -80,6 +80,7 @@ for p, fp in head.items():
     if not es and not circles:
         problems.append(f"[{names[p]}: 辺なし]")
         continue
+    # Issue の判定どおり、端点の次数がすべて 2 なら閉じているとみなす（離れた 2 つの閉路も閉と扱う）
     degree = collections.Counter(pt for e in es for pt in e)
     if any(d != 2 for d in degree.values()):
         problems.append(f"[{names[p]}]")
@@ -87,13 +88,21 @@ report("3 F.CrtYd が閉じた外形", problems, len(mods))
 
 # 基準 4: スイッチはキーキャップの外形
 switches = [p for p in mods if C.is_switch(names[p])]
-report("4 スイッチのコートヤードがキーキャップ外形",
-       [f"[{names[p]}]" for p in switches
-        if set(C.courtyard_edges(head[p])[0]) != C.edges(C.keycap_outline(names[p]))], len(switches))
+
+
+def matches(fp, outline):
+    es, circles = C.courtyard_edges(fp)
+    return outline is not None and circles == 0 and set(es) == C.edges(outline)
+
+
+problems = [f"[{names[p]}]" for p in switches if not matches(head[p], C.keycap_outline(names[p]))]
+if len(switches) != 54:
+    problems.append(f"[対象が {len(switches)} / 54 件]")
+report("4 スイッチのコートヤードがキーキャップ外形", problems, len(switches))
 
 # 基準 5: スイッチ以外の新規 22 件は外形＋0.25mm
 others = [p for p in mods if not C.is_switch(names[p]) and names[p] not in HAD_COURTYARD]
-problems = [f"[{names[p]}]" for p in others if set(C.courtyard_edges(head[p])[0]) != C.edges(C.body_rect(head[p]))]
+problems = [f"[{names[p]}]" for p in others if not matches(head[p], C.body_rect(head[p]))]
 if len(others) != 22:
     problems.append(f"[対象が {len(others)} / 22 件]")
 report("5 スイッチ以外の新しいコートヤードが外形+0.25mm", problems, len(others))
@@ -104,9 +113,23 @@ def without_crtyd(fp):
     return [g for g in K.graphics(fp) if g[1] != ("F.CrtYd",)]
 
 
+def strip(node, drop):
+    """S 式から drop に含まれる名前の子ノードを除いたもの（比較用）。"""
+    if not isinstance(node, list):
+        return node
+    return [strip(c, drop) for c in node if not (isinstance(c, list) and c and c[0] in drop)]
+
+
 def pads_for_compare(name, fp):
-    # Breakaway_Mousebite の NPTH は基準 8・9 で個別に見るので除く
-    return [] if name == MOUSEBITE else K.pads(fp)
+    """パッドを uuid 以外すべて比べる（solder_mask_margin や clearance なども含む）。
+    Breakaway_Mousebite の NPTH は基準 8・9 で、XIAO のパッド 28 の solder_mask_margin は基準 10 で見るので除く。"""
+    if name == MOUSEBITE:
+        return []
+    out = []
+    for p in K.children(fp, "pad"):
+        drop = {"uuid", "solder_mask_margin"} if (name == XIAO and p[1] == "28") else {"uuid"}
+        out.append(repr(strip(p, drop)))
+    return sorted(out)
 
 
 if not BASE:
