@@ -124,6 +124,9 @@ for p in mods:
             placements.setdefault((fam, path), {}).setdefault(values, []).append(names[p])
 problems = [f"[{fam} {os.path.basename(path)}: {len(groups)} 通り]"
             for (fam, path), groups in sorted(placements.items()) if len(groups) > 1]
+# 比べる対象がなくて素通りしないよう、4 系統のスイッチ 4 組 + ホットスワップのソケット 2 組がそろっていることも見る
+if len(placements) != 6:
+    problems.append(f"[比較できた組が {len(placements)} / 6]")
 report("4 系統内でスイッチとソケットの配置が同じ", problems, len(placements))
 
 # 基準 6: 3D モデル以外は比較元と同一
