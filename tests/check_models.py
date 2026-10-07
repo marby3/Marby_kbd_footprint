@@ -4,7 +4,8 @@
 使い方: python tests/check_models.py [比較元コミット]
   基準 6（3D モデル以外が比較元と同一）は Issue #4 限りの確認なので、比較元コミット
   （作業直前の main = 2124bab）を渡したときだけ実行し、省略時は SKIP する。
-  基準 2 は KICAD10_3DMODEL_DIR 環境変数、なければ kicad-cli の場所から標準 3D ライブラリを探す。
+  基準 2 は KICAD10_3DMODEL_DIR 環境変数、kicad-cli の場所、既定のインストール先の順に標準 3D ライブラリを探す。
+  基準 10 は check_layout.sh 経由でサブモジュールを GitHub から clone するため、ネットワークが必要。
 判定はコミット済みの HEAD に対して行う。
 """
 
@@ -54,7 +55,6 @@ MX_SWITCH = KS + "mx/silent_alpaca/KiCad/silent_alpaca.step"
 CHOC_SWITCH = KS + "choc/v1/KiCad/red.step"
 MX_SOCKET = KS + "socket/KiCad/mx.step"
 CHOC_SOCKET = KS + "socket/KiCad/choc.step"
-STAB = KS + "stabilizer/screw_in/KiCad/stabilizer_SIZE.step"
 MX_STAB = {"2_00u": "2u", "2_25u": "2u", "2_75u": "2u", "ISO_Enter": "2u", "3_00u": "3u",
            "6_00u": "6u", "6_25u": "6_25u", "7_00u": "7u"}
 QFN = "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/QFN-56-1EP_7x7mm_P0.4mm_EP5.6x5.6mm.step"
@@ -68,7 +68,7 @@ def expected(name):
         if family == "CherryMXSwitch":
             want = [MX_SWITCH] + ([MX_SOCKET] if mount == "hotswap" else [])
             if size in MX_STAB:
-                want.append(STAB.replace("SIZE", MX_STAB[size]))
+                want.append(KS + f"stabilizer/screw_in/KiCad/stabilizer_{MX_STAB[size]}.step")
         else:
             want = [CHOC_SWITCH] + ([CHOC_SOCKET] if mount == "hotswap" else [])
         return sorted(want)
@@ -85,13 +85,16 @@ def family(name):
 # 基準 1: パスはすべて 2 つのパス変数のどちらかで始まる
 report("1 パス変数で始まる",
        [f"[{names[p]}: {path}]" for p in mods for path in model_paths[p]
-        if not path.startswith(("${MARBY_KBD_DIR}/", "${KICAD10_3DMODEL_DIR}/"))], len(mods))
+        if not path.startswith(("${MARBY_KBD_DIR}/", "${KICAD10_3DMODEL_DIR}/"))],
+       sum(len(v) for v in model_paths.values()))
 
 
 # 基準 2: 展開したパスが実在する
 def stock_3d_dir():
-    """KICAD10_3DMODEL_DIR、なければ既定のインストール先を順に探す。"""
-    candidates = [os.environ.get("KICAD10_3DMODEL_DIR", ""),
+    """KICAD10_3DMODEL_DIR、kicad-cli の場所（<KiCad>/bin → <KiCad>/share/kicad/3dmodels）、既定のインストール先の順に探す。"""
+    cli = shutil.which("kicad-cli")
+    from_cli = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(cli))), "share", "kicad", "3dmodels") if cli else ""
+    candidates = [os.environ.get("KICAD10_3DMODEL_DIR", ""), from_cli,
                   "C:/Program Files/KiCad/10.0/share/kicad/3dmodels",
                   "/usr/share/kicad/3dmodels",
                   "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels"]
@@ -100,10 +103,12 @@ def stock_3d_dir():
 
 stock = stock_3d_dir()
 problems = []
-if stock is None or not os.path.isdir(stock):
-    problems.append(f"[KiCad 10 の標準 3D ライブラリが見つからない: {stock}]")
+if stock is None:
+    problems.append("[KiCad 10 の標準 3D ライブラリが見つからない（KICAD10_3DMODEL_DIR を設定してください）]")
 for p in mods:
     for path in model_paths[p]:
+        if stock is None and path.startswith("${KICAD10_3DMODEL_DIR}"):
+            continue
         real = path.replace("${MARBY_KBD_DIR}", ROOT).replace("${KICAD10_3DMODEL_DIR}", stock or "")
         if not os.path.isfile(real):
             problems.append(f"[{names[p]}: {path}]")
@@ -162,7 +167,8 @@ def run_head(path, cmd):
     return [] if r.returncode == 0 else [line for line in out.splitlines() if line.startswith("FAIL")] or [f"[exit {r.returncode}]"]
 
 
-# check_format.py は隣の kicad_mod.py を import するので、HEAD の 2 ファイルを一時ディレクトリに並べて実行する
+# 作業ツリーではなく HEAD の版を実行するため、HEAD の check_format.py と kicad_mod.py を一時ディレクトリに並べる。
+# check_format.py が読む tests/fixtures/descr.tsv は作業ツリーの版になる（ROOT 基準で読むため）
 with tempfile.TemporaryDirectory() as tmp:
     for f in ("check_format.py", "kicad_mod.py"):
         with open(os.path.join(tmp, f), "w", encoding="utf-8", newline="\n") as out:
@@ -171,6 +177,7 @@ with tempfile.TemporaryDirectory() as tmp:
     lines = r.stdout.decode("utf-8", "replace").splitlines()
     report("9 check_format.py", [] if r.returncode == 0 else [l for l in lines if l.startswith("FAIL")] or [f"[exit {r.returncode}]"])
 # "bash" だけを渡すと、Windows では System32 の WSL bash が先に見つかるため、PATH 上のフルパスで起動する
-report("10 check_layout.sh", run_head("tests/check_layout.sh", [shutil.which("bash"), "-s"]))
+bash = shutil.which("bash")
+report("10 check_layout.sh", run_head("tests/check_layout.sh", [bash, "-s"]) if bash else ["[bash が見つからない]"])
 
 sys.exit(1 if failed else 0)

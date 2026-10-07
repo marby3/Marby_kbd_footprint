@@ -58,37 +58,47 @@ def config_home(tmp):
     version_dir = os.path.join(dest, "10.0")
     os.makedirs(version_dir, exist_ok=True)
     viewer = os.path.join(version_dir, "3d_viewer.json")
-    settings = json.load(open(viewer, encoding="utf-8")) if os.path.isfile(viewer) else {}
+    settings = {}
+    if os.path.isfile(viewer):
+        with open(viewer, encoding="utf-8") as f:
+            settings = json.load(f)
     render = settings.setdefault("render", {})
     for key in ("show_footprints_normal", "show_footprints_insert", "show_footprints_virtual",
                 "show_footprints_not_in_posfile", "show_footprints_dnp"):
         render[key] = True
-    json.dump(settings, open(viewer, "w", encoding="utf-8"), indent=2)
+    with open(viewer, "w", encoding="utf-8") as f:
+        json.dump(settings, f, indent=2)
     return dest
 
 
 def main():
     out = os.path.abspath(sys.argv[1])
     os.makedirs(out, exist_ok=True)
-    tmp = tempfile.mkdtemp()
-    env = dict(os.environ, MARBY_KBD_DIR=ROOT.replace("\\", "/"), KICAD_CONFIG_HOME=config_home(tmp))
+    with tempfile.TemporaryDirectory() as tmp:
+        env = dict(os.environ, MARBY_KBD_DIR=ROOT.replace("\\", "/"), KICAD_CONFIG_HOME=config_home(tmp))
+        failures = render_all(out, env, sys.argv[2:])
+    sys.exit(1 if failures else 0)
+
+
+def render_all(out, env, names):
+    failures = 0
     cli = os.path.join(os.path.dirname(sys.executable), "kicad-cli.exe")
     if not os.path.isfile(cli):
         cli = "kicad-cli"
-    for name in sys.argv[2:]:
+    for name in names:
         pcb = os.path.join(out, name + ".kicad_pcb")
         board_with(name, pcb)
-        for side, rotate in (("top", None), ("bottom", None), ("front", None)):
+        for side in ("top", "bottom", "front"):
             png = os.path.join(out, f"{name}_{side}.png")
             cmd = [cli, "pcb", "render", "--side", side, "--width", "900", "--height", "700",
                    "--quality", "high", "--background", "opaque", "-D", f"MARBY_KBD_DIR={env['MARBY_KBD_DIR']}",
                    "-o", png, pcb]
-            if rotate:
-                cmd += ["--rotate", rotate]
             r = subprocess.run(cmd, env=env, capture_output=True, text=True)
             print(f"{name} {side}: exit {r.returncode}")
             if r.returncode != 0:
+                failures += 1
                 print(r.stdout[-500:], r.stderr[-500:])
+    return failures
 
 
 if __name__ == "__main__":
