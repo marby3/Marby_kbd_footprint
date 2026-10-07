@@ -5,7 +5,7 @@
   基準 2（Choc の楕円穴以外が比較元と同一）は比較元コミット（作業直前の main = cb25e17）を、
   基準 4（取り込んだ 3 件が取り込み元と同一）は取り込み元フォルダを渡したときだけ実行し、
   省略時は SKIP する。どちらも Issue #15 限りの確認なので、常用のチェックを RED にしない。
-  基準 9〜11 は既存のチェックを実行する（check_layout.sh 経由でネットワークが必要）。
+  基準 9〜11 は既存のチェックを実行する（check_layout.sh 経由でネットワーク、check_format.py 経由で kicad-cli が必要）。
 判定はコミット済みの HEAD に対して行う。
 """
 
@@ -55,8 +55,10 @@ head = {p: K.parse(git("show", f"HEAD:{p}")) for p in mods}
 # ---- Issue #15 の内容 ----
 SLOT_AT = (5.0, -5.55)
 SLOT = ("", "np_thru_hole", "oval", (5.0, -5.55, 0.0), (1.0, 0.3), ("'oval'", 1.0, 0.3), ("*.Cu", "*.Mask"))
-IMPORTS = {  # 取り込み元の名前: (ライブラリ, 新しい名前, descr。None は取り込み元の descr をそのまま使う)
-    "MER1045-24-x": ("Marby_Input", "RotaryEncoder_MER1045-24-x", None),
+# MER1045-24-x は取り込み元の descr をそのまま使う（Issue #15 に載せた全文）
+MER_DESCR = 'knitter-switch MER1045-24-x, incremental rotary encoder 24 detents/pulses, SMD gull-wing terminals, drawing 30 19 44. Land pattern (P.C.B. LAND DIMENSION, pos.tol. dia.0.05mm): COM(N) pad center at radius 10.25mm, A(W)/B(E)/DUMMY(S) pads at radius 8.8mm, all pads 0.95x1.4mm. 4 additional unlabeled corner pads (NE/NW/SW/SE) at radius 8.8mm - datasheet gives no electrical name for these; treated here as mechanical/shield pads (MP1-4), NOT CONFIRMED - verify against an actual unit or the manufacturer before relying on them electrically. 2x mounting holes dia.1.55mm at X=+/-7.0mm (matches 14.0mm spacing), NPTH, engage dia.1.5mm locating pegs on the component. Radii/topology derived from the manufacturer PDF; cross-checked against printed dims 17.6 (=2x8.8) and 2x17.6 diagonal (=2x8.8 through opposite corner pads).'
+IMPORTS = {  # 取り込み元の名前: (ライブラリ, 新しい名前, descr)
+    "MER1045-24-x": ("Marby_Input", "RotaryEncoder_MER1045-24-x", MER_DESCR),
     "mousebite": ("Marby_Mechanical", "Breakaway_Mousebite",
                   "Mouse bites (perforated breakaway holes) for panel separation"),
     "xiao2promicro": ("Marby_MCU", "Board_XIAO_to_ProMicro",
@@ -125,27 +127,9 @@ else:
 
 
 # 基準 5: descr
-def want_descr(src):
-    descr = IMPORTS[src][2]
-    if descr is not None:
-        return descr
-    # MER1045-24-x は取り込み元の descr をそのまま使う。Issue に全文を載せた文字列の先頭で照合する
-    return None
-
-
-problems = []
-for src, fp in present.items():
-    want = want_descr(src)
-    if want is None:
-        if not K.descr(fp).startswith("knitter-switch MER1045-24-x, incremental rotary encoder 24 detents/pulses"):
-            problems.append(f"[{src}]")
-        elif SOURCE:
-            with open(os.path.join(SOURCE, src + ".kicad_mod"), encoding="utf-8") as f:
-                if K.descr(K.parse(f.read())) != K.descr(fp):
-                    problems.append(f"[{src}: 取り込み元の descr と違う]")
-    elif K.descr(fp) != want:
-        problems.append(f"[{src}]")
-report("5 取り込んだ 3 件の descr", problems + [f"[{s}: なし]" for s in IMPORTS if s not in present], len(IMPORTS))
+report("5 取り込んだ 3 件の descr",
+       [f"[{src}]" for src, fp in present.items() if K.descr(fp) != IMPORTS[src][2]]
+       + [f"[{s}: なし]" for s in IMPORTS if s not in present], len(IMPORTS))
 
 # 基準 6: Value
 report("6 取り込んだ 3 件の Value",
