@@ -6,11 +6,16 @@ KiCad 同梱の Python で実行する（pcbnew モジュールが必要）:
 - MX ホットスワップは裏面に置く前提のフットプリントなので、裏返して B 面に置く
 - 上面（top）・下面（bottom）・側面（front）の 3 枚を書き出す
 - 3D モデルのパス変数 MARBY_KBD_DIR はリポジトリのルートに設定して描画する
+- kicad-cli は利用者の 3D ビューアー設定（THT を隠す等）に従うため、一時的な設定フォルダ
+  （KICAD_CONFIG_HOME）で全種類のモデルを表示させて描画する。利用者の設定は変えない
 """
 
+import json
 import os
+import shutil
 import subprocess
 import sys
+import tempfile
 
 import pcbnew
 
@@ -44,10 +49,29 @@ def board_with(name, path):
     board.Save(path)
 
 
+def config_home(tmp):
+    """利用者の KiCad 設定を写し、3D ビューアーで全種類のモデルを表示する設定にした設定フォルダを作る。"""
+    src = os.path.join(os.environ.get("APPDATA", ""), "kicad")
+    dest = os.path.join(tmp, "kicad")
+    if os.path.isdir(src):
+        shutil.copytree(src, dest)
+    version_dir = os.path.join(dest, "10.0")
+    os.makedirs(version_dir, exist_ok=True)
+    viewer = os.path.join(version_dir, "3d_viewer.json")
+    settings = json.load(open(viewer, encoding="utf-8")) if os.path.isfile(viewer) else {}
+    render = settings.setdefault("render", {})
+    for key in ("show_footprints_normal", "show_footprints_insert", "show_footprints_virtual",
+                "show_footprints_not_in_posfile", "show_footprints_dnp"):
+        render[key] = True
+    json.dump(settings, open(viewer, "w", encoding="utf-8"), indent=2)
+    return dest
+
+
 def main():
     out = os.path.abspath(sys.argv[1])
     os.makedirs(out, exist_ok=True)
-    env = dict(os.environ, MARBY_KBD_DIR=ROOT.replace("\\", "/"))
+    tmp = tempfile.mkdtemp()
+    env = dict(os.environ, MARBY_KBD_DIR=ROOT.replace("\\", "/"), KICAD_CONFIG_HOME=config_home(tmp))
     cli = os.path.join(os.path.dirname(sys.executable), "kicad-cli.exe")
     if not os.path.isfile(cli):
         cli = "kicad-cli"
