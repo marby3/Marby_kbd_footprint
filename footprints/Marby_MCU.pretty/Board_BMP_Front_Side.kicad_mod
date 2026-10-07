@@ -797,15 +797,4 @@
 		(uuid "dd1d9401-f90b-4bbd-b3bb-aaecfe656040")
 	)
 	(embedded_fonts no)
-	(model "D:/Documents/KiCad/KiCad_Library/usagi.kicad-master/microcontroller/ProMicro_Original+SPH2.5.wrl"
-		(offset
-			(xyz -7.62 12.7 0)
-		)
-		(scale
-			(xyz 0.3937 0.3937 0.3937)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
-	)
 )

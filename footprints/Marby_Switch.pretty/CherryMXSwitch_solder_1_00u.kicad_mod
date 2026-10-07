@@ -279,12 +279,12 @@
 		(uuid "cb7547fd-4885-4e49-9506-8eafcb44cb17")
 	)
 	(embedded_fonts no)
-	(model "D:/Documents/KiCad/KiCad_Library/usagi.kicad-master/switch/CherryMX_Red.wrl"
+	(model "${MARBY_KBD_DIR}/3dmodels/keyswitch_model/mx/silent_alpaca/KiCad/silent_alpaca.step"
 		(offset
 			(xyz 0 0 0)
 		)
 		(scale
-			(xyz 0.3937 0.3937 0.3937)
+			(xyz 1 1 1)
 		)
 		(rotate
 			(xyz 0 0 0)

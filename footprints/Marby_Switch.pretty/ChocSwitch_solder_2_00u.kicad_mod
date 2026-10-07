@@ -497,12 +497,12 @@
 		(uuid "deeccb90-c24c-4e5a-80ba-331380a4565c")
 	)
 	(embedded_fonts no)
-	(model "D:/Documents/KiCad/KiCad_Library/usagi.kicad-master/switch/CherryMX_Red.wrl"
+	(model "${MARBY_KBD_DIR}/3dmodels/keyswitch_model/choc/v1/KiCad/red.step"
 		(offset
 			(xyz 0 0 0)
 		)
 		(scale
-			(xyz 0.3937 0.3937 0.3937)
+			(xyz 1 1 1)
 		)
 		(rotate
 			(xyz 0 0 0)

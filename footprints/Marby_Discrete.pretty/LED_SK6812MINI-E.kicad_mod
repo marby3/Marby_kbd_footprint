@@ -182,15 +182,4 @@
 		(uuid "09aaad3d-98ae-412a-b7fb-5bcde27e51a8")
 	)
 	(embedded_fonts no)
-	(model "C:/Users/marby/Documents/KiCad/6.0/footprint/kbd/kicad-packages3D/kbd.3dshapes/YS-SK6812MINI-E Soldered.step"
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 180 0)
-		)
-	)
 )

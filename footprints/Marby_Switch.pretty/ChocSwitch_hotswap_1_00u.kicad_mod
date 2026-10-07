@@ -427,23 +427,23 @@
 		(uuid "670b199d-b792-45f7-908a-e7dfc10130be")
 	)
 	(embedded_fonts no)
-	(model "D:/Documents/KiCad/6.0/footprints/kbd/kicad-packages3D/kbd.3dshapes/Kailh-CherryMX-Socket.step"
-		(offset
-			(xyz -1 7.5 -3.5)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 180)
-		)
-	)
-	(model "D:/Documents/KiCad/6.0/footprints/kbd/kicad-packages3D/kbd.3dshapes/CherryMX Switch.step"
+	(model "${MARBY_KBD_DIR}/3dmodels/keyswitch_model/choc/v1/KiCad/red.step"
 		(offset
 			(xyz 0 0 0)
 		)
 		(scale
 			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+	(model "${MARBY_KBD_DIR}/3dmodels/keyswitch_model/socket/KiCad/choc.step"
+		(offset
+			(xyz 0 -5.9 -1.6)
+		)
+		(scale
+			(xyz 1 1 -1)
 		)
 		(rotate
 			(xyz 0 0 0)
