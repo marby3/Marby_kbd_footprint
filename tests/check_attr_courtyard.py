@@ -68,9 +68,10 @@ for p, fp in head.items():
     gs = crtyd(fp)
     if not gs:
         problems.append(f"[{names[p]}: なし]")
-    elif any(g[4] != 0.05 for g in gs):
+    elif names[p] not in HAD_COURTYARD and any(g[4] != 0.05 for g in gs):
+        # 既存 6 件は「変えない」（基準 6）ので線幅を問わない。LED と EVQWGD001 は 0.12mm
         problems.append(f"[{names[p]}: 線幅 {sorted(set(g[4] for g in gs))}]")
-report("2 F.CrtYd があり線幅 0.05mm", problems, len(mods))
+report("2 F.CrtYd があり、新しく付けたものは線幅 0.05mm", problems, len(mods))
 
 # 基準 3: 閉じた外形
 problems = []
