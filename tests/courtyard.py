@@ -114,7 +114,7 @@ def edges(points):
     """閉じた多角形の辺（向きなし・丸め済み）の集合。"""
     out = set()
     for a, b in zip(points, points[1:] + points[:1]):
-        a, b = (round(a[0], 4), round(a[1], 4)), (round(b[0], 4), round(b[1], 4))
+        a, b = (round(a[0], 6), round(a[1], 6)), (round(b[0], 6), round(b[1], 6))
         out.add(tuple(sorted((a, b))))
     return out
 
@@ -128,8 +128,8 @@ def courtyard_edges(fp):
         kind, _, pts, xy, _ = g
         p = dict(pts)
         if kind == "fp_line":
-            out.append(tuple(sorted(((round(p["start"][0], 4), round(p["start"][1], 4)),
-                                     (round(p["end"][0], 4), round(p["end"][1], 4))))))
+            out.append(tuple(sorted(((round(p["start"][0], 6), round(p["start"][1], 6)),
+                                     (round(p["end"][0], 6), round(p["end"][1], 6))))))
         elif kind == "fp_rect":
             (x0, y0), (x1, y1) = p["start"], p["end"]
             out += list(edges([(x0, y0), (x1, y0), (x1, y1), (x0, y1)]))
