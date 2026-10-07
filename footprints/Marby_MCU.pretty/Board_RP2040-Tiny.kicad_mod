@@ -789,6 +789,18 @@
 		(layer "F.SilkS")
 		(uuid "f4cdfc89-0cac-4394-a517-e2405ece46df")
 	)
+	(fp_poly
+		(pts
+			(xy -9.25 -12) (xy 9.25 -12) (xy 9.25 12) (xy -9.25 12)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "6f4923cf-7943-453f-8e7d-683811835a7f")
+	)
 	(fp_text user "14"
 		(at -7.62 8.89 0)
 		(unlocked yes)

@@ -94,6 +94,18 @@
 		(layer "F.SilkS")
 		(uuid "dc791de4-9d97-4b5c-9122-3b530db4585d")
 	)
+	(fp_poly
+		(pts
+			(xy -0.9 -5.1) (xy 0.9 -5.1) (xy 0.9 5.1) (xy -0.9 5.1)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "e976a9c9-adf4-4cdb-8373-d056c6626c76")
+	)
 	(pad "1" smd custom
 		(at 0 1.875 270)
 		(size 1.6 1.3)

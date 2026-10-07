@@ -91,6 +91,18 @@
 		(layer "F.SilkS")
 		(uuid "827fecc9-3f30-48c2-8d3c-a8c9957682b4")
 	)
+	(fp_poly
+		(pts
+			(xy -0.3 -0.25) (xy 6.1 -0.25) (xy 6.1 13.15) (xy -0.3 13.15)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "504c405a-ee87-4042-9566-3ba61cf61fb3")
+	)
 	(fp_text user "TRRS"
 		(at 2.15 6.3 0)
 		(layer "F.SilkS")

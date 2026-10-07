@@ -430,6 +430,18 @@
 		(layer "Eco1.User")
 		(uuid "f632a889-d495-43d0-834e-3f3df0f8a952")
 	)
+	(fp_poly
+		(pts
+			(xy -11.85 -7.8) (xy 10.1 -7.8) (xy 10.1 10.1) (xy -11.85 10.1)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "764777b0-53ec-405f-a78c-24320155548d")
+	)
 	(pad "" np_thru_hole oval
 		(at -5 -6.3)
 		(size 1.5 1)

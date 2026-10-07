@@ -173,6 +173,18 @@
 		(layer "Dwgs.User")
 		(uuid "95575e90-633a-4d74-9321-22a129acff36")
 	)
+	(fp_poly
+		(pts
+			(xy -9.78 -9.78) (xy 9.78 -9.78) (xy 9.78 9.78) (xy -9.78 9.78)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "7284b300-4014-4615-bf30-aa67a63d07f3")
+	)
 	(pad "" np_thru_hole circle
 		(at -6 -6)
 		(size 2.2 2.2)

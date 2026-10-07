@@ -50,7 +50,7 @@
 			)
 		)
 	)
-	(attr smd)
+	(attr through_hole)
 	(duplicate_pad_numbers_are_jumpers no)
 	(fp_line
 		(start -7 -7)
@@ -252,6 +252,18 @@
 		)
 		(layer "Eco2.User")
 		(uuid "a30a0f2f-7172-4176-82b6-aa7fb8eb547f")
+	)
+	(fp_poly
+		(pts
+			(xy -57.15 -9.525) (xy 57.15 -9.525) (xy 57.15 9.525) (xy -57.15 9.525)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "a110c778-67d8-4169-a312-b4637da7d2b7")
 	)
 	(pad "" np_thru_hole circle
 		(at -47.625 -6.985 180)
