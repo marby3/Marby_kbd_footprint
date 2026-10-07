@@ -305,6 +305,18 @@
 		(layer "Edge.Cuts")
 		(uuid "986f9476-ff49-430f-ab3f-1370369abfc1")
 	)
+	(fp_poly
+		(pts
+			(xy -6.25 -10.64) (xy 7.13 -10.64) (xy 7.13 9.83) (xy -6.25 9.83)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "5f2644a0-51e4-4cbf-9c02-4036dbb7932e")
+	)
 	(fp_text user "PMW3360DM-T2QU"
 		(at -7.366 -4.826 270)
 		(unlocked yes)

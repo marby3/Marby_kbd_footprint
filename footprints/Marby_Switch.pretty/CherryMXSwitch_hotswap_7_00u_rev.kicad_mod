@@ -291,6 +291,18 @@
 		(layer "Eco2.User")
 		(uuid "b9b4607e-7608-45be-b4e6-22de8e31b423")
 	)
+	(fp_poly
+		(pts
+			(xy -66.675 -9.525) (xy 66.675 -9.525) (xy 66.675 9.525) (xy -66.675 9.525)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "4cf328a1-d66c-443e-84ca-c9a915f2b62b")
+	)
 	(pad "" np_thru_hole circle
 		(at -57.15 -6.985)
 		(size 3.048 3.048)

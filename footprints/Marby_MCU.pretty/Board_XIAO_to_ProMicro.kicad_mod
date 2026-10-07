@@ -444,6 +444,18 @@
 		(layer "Dwgs.User")
 		(uuid "78d68a9c-5403-4d1a-a9f1-136f2cece4d1")
 	)
+	(fp_poly
+		(pts
+			(xy -9.12 -16.76) (xy 9.12 -16.76) (xy 9.12 16.72) (xy -9.12 16.72)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "b82e85e2-791a-49e7-ad4a-3bd8c2d13c8e")
+	)
 	(fp_text user "↑USB↑"
 		(at 0 -15.24 0)
 		(unlocked yes)
@@ -1157,6 +1169,7 @@
 		(drill 0.8)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
+		(solder_mask_margin 0)
 		(clearance 0.2)
 		(uuid "bfe530b5-f57d-4a23-91b8-c5a39e07a54b")
 	)

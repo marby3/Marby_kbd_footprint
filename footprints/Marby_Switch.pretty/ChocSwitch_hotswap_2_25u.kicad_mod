@@ -479,6 +479,18 @@
 		(layer "Edge.Cuts")
 		(uuid "e6bf475c-ef52-4c38-b8b4-e12145c5171e")
 	)
+	(fp_poly
+		(pts
+			(xy -21.43125 -9.525) (xy 21.43125 -9.525) (xy 21.43125 9.525) (xy -21.43125 9.525)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "66eb2a78-0dcd-495f-b946-be3806ab8cee")
+	)
 	(pad "" np_thru_hole circle
 		(at -5.5 0 90)
 		(size 1.9 1.9)

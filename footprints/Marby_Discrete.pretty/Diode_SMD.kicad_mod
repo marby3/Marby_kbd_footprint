@@ -51,7 +51,7 @@
 			)
 		)
 	)
-	(attr through_hole)
+	(attr smd)
 	(duplicate_pad_numbers_are_jumpers no)
 	(fp_line
 		(start -0.5 -0.5)
@@ -92,6 +92,18 @@
 		)
 		(layer "F.SilkS")
 		(uuid "be2fabb2-dbd9-432c-9526-fcfb1c77e091")
+	)
+	(fp_poly
+		(pts
+			(xy -0.9 -3.3) (xy 0.9 -3.3) (xy 0.9 3.3) (xy -0.9 3.3)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "8e6814ec-f522-4c0e-a4b8-099712ead16a")
 	)
 	(pad "1" smd custom
 		(at 0 1.775 270)

@@ -50,7 +50,7 @@
 			)
 		)
 	)
-	(attr through_hole)
+	(attr board_only exclude_from_pos_files exclude_from_bom)
 	(duplicate_pad_numbers_are_jumpers no)
 	(fp_line
 		(start -3.6 -0.4)
@@ -71,6 +71,18 @@
 		)
 		(layer "Dwgs.User")
 		(uuid "29c7e1e3-269c-4270-b1b7-a2ca0e37476c")
+	)
+	(fp_poly
+		(pts
+			(xy -3.68 -0.68) (xy 3.68 -0.68) (xy 3.68 0.28) (xy -3.68 0.28)
+		)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "5558e563-e142-4805-88d6-606305c0fe91")
 	)
 	(pad "" np_thru_hole circle
 		(at -3.2 -0.2 180)
