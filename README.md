@@ -43,7 +43,7 @@ nickname は上の表のとおりにそろえておくと、ほかの PC や他�
 
 | フットプリント | 3D モデル |
 |---|---|
-| `CherryMXSwitch_*` | Silent Alpaca。ホットスワップは MX 用ソケット付き、2u 以上は Screw-in スタビライザー付き |
+| `CherryMXSwitch_*` | Silent Alpaca。ホットスワップは MX 用ソケット付き、2u 以上と ISO Enter は Screw-in スタビライザー付き |
 | `ChocSwitch_*` | Kailh Choc V1 Red。ホットスワップは Choc 用ソケット付き |
 | `RP2040-QFN-56` | KiCad 標準ライブラリの QFN-56（`${KICAD10_3DMODEL_DIR}`、設定不要） |
 | 上記以外 | なし |
