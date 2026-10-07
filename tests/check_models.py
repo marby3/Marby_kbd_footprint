@@ -54,7 +54,7 @@ MX_SWITCH = KS + "mx/silent_alpaca/KiCad/silent_alpaca.step"
 CHOC_SWITCH = KS + "choc/v1/KiCad/red.step"
 MX_SOCKET = KS + "socket/KiCad/mx.step"
 CHOC_SOCKET = KS + "socket/KiCad/choc.step"
-STAB = KS + "stabilizer/screw_in/KiCad/stabilizer_{}.step"
+STAB = KS + "stabilizer/screw_in/KiCad/stabilizer_SIZE.step"
 MX_STAB = {"2_00u": "2u", "2_25u": "2u", "2_75u": "2u", "ISO_Enter": "2u", "3_00u": "3u",
            "6_00u": "6u", "6_25u": "6_25u", "7_00u": "7u"}
 QFN = "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/QFN-56-1EP_7x7mm_P0.4mm_EP5.6x5.6mm.step"
@@ -68,7 +68,7 @@ def expected(name):
         if family == "CherryMXSwitch":
             want = [MX_SWITCH] + ([MX_SOCKET] if mount == "hotswap" else [])
             if size in MX_STAB:
-                want.append(STAB.format(MX_STAB[size]))
+                want.append(STAB.replace("SIZE", MX_STAB[size]))
         else:
             want = [CHOC_SWITCH] + ([CHOC_SOCKET] if mount == "hotswap" else [])
         return sorted(want)
@@ -90,13 +90,12 @@ report("1 パス変数で始まる",
 
 # 基準 2: 展開したパスが実在する
 def stock_3d_dir():
-    if os.environ.get("KICAD10_3DMODEL_DIR"):
-        return os.environ["KICAD10_3DMODEL_DIR"]
-    cli = shutil.which("kicad-cli")
-    if cli:
-        # <KiCad>/bin/kicad-cli → <KiCad>/share/kicad/3dmodels
-        return os.path.join(os.path.dirname(os.path.dirname(cli)), "share", "kicad", "3dmodels")
-    return None
+    """KICAD10_3DMODEL_DIR、なければ既定のインストール先を順に探す。"""
+    candidates = [os.environ.get("KICAD10_3DMODEL_DIR", ""),
+                  "C:/Program Files/KiCad/10.0/share/kicad/3dmodels",
+                  "/usr/share/kicad/3dmodels",
+                  "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels"]
+    return next((c for c in candidates if c and os.path.isdir(c)), None)
 
 
 stock = stock_3d_dir()
