@@ -1,0 +1,204 @@
+(footprint "RotaryEncoder_MER1045-24-x"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "knitter-switch MER1045-24-x, incremental rotary encoder 24 detents/pulses, SMD gull-wing terminals, drawing 30 19 44. Land pattern (P.C.B. LAND DIMENSION, pos.tol. dia.0.05mm): COM(N) pad center at radius 10.25mm, A(W)/B(E)/DUMMY(S) pads at radius 8.8mm, all pads 0.95x1.4mm. 4 additional unlabeled corner pads (NE/NW/SW/SE) at radius 8.8mm - datasheet gives no electrical name for these; treated here as mechanical/shield pads (MP1-4), NOT CONFIRMED - verify against an actual unit or the manufacturer before relying on them electrically. 2x mounting holes dia.1.55mm at X=+/-7.0mm (matches 14.0mm spacing), NPTH, engage dia.1.5mm locating pegs on the component. Radii/topology derived from the manufacturer PDF; cross-checked against printed dims 17.6 (=2x8.8) and 2x17.6 diagonal (=2x8.8 through opposite corner pads).")
+	(tags "rotary encoder knitter-switch incremental MER1045")
+	(property "Reference" "REF**"
+		(at 0 -13.5 0)
+		(layer "F.SilkS")
+		(uuid "d1fb18e4-49f5-43ff-916e-f1571e412b1b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "RotaryEncoder_MER1045-24-x"
+		(at 0 13.5 0)
+		(layer "F.Fab")
+		(uuid "a2e684b7-dd1f-45b9-9947-375497de4e00")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "27e2e347-4d70-4e87-b5cf-3e1497e9a8e6")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "810f051b-939c-4655-83a0-bd5ff1825545")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start 0 -10.25)
+		(end 0 -11.6)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4d4e7d7d-fa63-41fe-b59e-e81b5ea67c5f")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 7.35 0)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "a0e0f74f-d544-4f6a-942d-c42d2a7e615b")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 11 0)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "e570fe9b-72b4-4cb0-b644-896e01b2006d")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 7.35 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "bd462b7b-523d-4146-99fd-dd543bc79b27")
+	)
+	(fp_text user "A"
+		(at -7.5 -0.9 0)
+		(layer "F.Fab")
+		(uuid "4d705873-8532-422d-9376-f992882ec612")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.1)
+			)
+		)
+	)
+	(fp_text user "COM"
+		(at 0 -9.2 0)
+		(layer "F.Fab")
+		(uuid "01cd32a2-b20f-4538-97be-f9f14a92d93d")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.1)
+			)
+		)
+	)
+	(fp_text user "D"
+		(at 0 7.6 0)
+		(layer "F.Fab")
+		(uuid "a71b7e73-ee04-41e2-8c38-97e80182f671")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.1)
+			)
+		)
+	)
+	(fp_text user "B"
+		(at 7.5 -0.9 0)
+		(layer "F.Fab")
+		(uuid "f51e9b45-baf8-4c79-a04a-9ee8ebc656f2")
+		(effects
+			(font
+				(size 0.6 0.6)
+				(thickness 0.1)
+			)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -7 0)
+		(size 1.55 1.55)
+		(drill 1.55)
+		(layers "*.Cu" "*.Mask")
+		(uuid "4d6465cc-ee45-450e-8a60-a7cd416c78dc")
+	)
+	(pad "" np_thru_hole circle
+		(at 7 0)
+		(size 1.55 1.55)
+		(drill 1.55)
+		(layers "*.Cu" "*.Mask")
+		(uuid "32de724f-d28f-4efa-8e35-58efc151faeb")
+	)
+	(pad "A" smd rect
+		(at -8.8 0 180)
+		(size 0.95 1.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "2128ea65-56cc-499c-8ffe-e657a9d502db")
+	)
+	(pad "B" smd rect
+		(at 8.8 0)
+		(size 0.95 1.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "93f517bf-7c1e-47a9-8d01-6e1bdd622b25")
+	)
+	(pad "COM" smd rect
+		(at 0 -10.25 90)
+		(size 0.95 1.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "cef51179-3d27-49e3-a4a0-a68cea87b382")
+	)
+	(pad "D" smd rect
+		(at 0 8.8 270)
+		(size 0.95 1.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "6bcea50e-f708-4909-8318-fee379ba2892")
+	)
+	(pad "MP1" smd rect
+		(at 6.2225 -6.2225 45)
+		(size 0.95 1.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "1fd420c9-4b96-44d3-82ff-98ab53ee4041")
+	)
+	(pad "MP2" smd rect
+		(at -6.2225 -6.2225 135)
+		(size 0.95 1.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "df5d746f-c168-4ec1-a1ed-5bec645be6ba")
+	)
+	(pad "MP3" smd rect
+		(at -6.2225 6.2225 225)
+		(size 0.95 1.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "0856c3db-014b-434b-9136-e6b57641edf2")
+	)
+	(pad "MP4" smd rect
+		(at 6.2225 6.2225 315)
+		(size 0.95 1.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "241655ec-9950-4e9b-bc53-dd5b31b8d7df")
+	)
+	(embedded_fonts no)
+)

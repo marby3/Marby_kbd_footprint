@@ -3,6 +3,8 @@ Board_BMP_Front_Side	BLE Micro Pro module, front-side mount
 Board_RP2040-Tiny	RP2040-Tiny module
 Board_Raspberry_Pi_Pico_Flip_Side	Raspberry Pi Pico module, flipped (back-side mount)
 Board_Raspberry_Pi_Pico_Front_Side	Raspberry Pi Pico module, front-side mount
+Board_XIAO_to_ProMicro	Seeed XIAO mounted on a Pro Micro footprint (adapter)
+Breakaway_Mousebite	Mouse bites (perforated breakaway holes) for panel separation
 Breakaway_Tabs	Breakaway tab (mouse bites) for panel separation
 CherryMXSwitch_hotswap_1_00u	Cherry MX compatible switch, Kailh MX hotswap socket, 1.00u
 CherryMXSwitch_hotswap_1_25u	Cherry MX compatible switch, Kailh MX hotswap socket, 1.25u
@@ -75,5 +77,6 @@ RP2040-QFN-56	Raspberry Pi RP2040 MCU, QFN-56 7x7mm, 0.4mm pitch, exposed pad
 ResetSW_1side	Tactile reset switch, 2-pin, through-hole
 RotaryEncoder_EC12E	Alps EC12E rotary encoder with switch, vertical shaft
 RotaryEncoder_EVQWGD001	Panasonic EVQWGD001 side-operated rotary encoder (thumb wheel)
+RotaryEncoder_MER1045-24-x	knitter-switch MER1045-24-x, incremental rotary encoder 24 detents/pulses, SMD gull-wing terminals, drawing 30 19 44. Land pattern (P.C.B. LAND DIMENSION, pos.tol. dia.0.05mm): COM(N) pad center at radius 10.25mm, A(W)/B(E)/DUMMY(S) pads at radius 8.8mm, all pads 0.95x1.4mm. 4 additional unlabeled corner pads (NE/NW/SW/SE) at radius 8.8mm - datasheet gives no electrical name for these; treated here as mechanical/shield pads (MP1-4), NOT CONFIRMED - verify against an actual unit or the manufacturer before relying on them electrically. 2x mounting holes dia.1.55mm at X=+/-7.0mm (matches 14.0mm spacing), NPTH, engage dia.1.5mm locating pegs on the component. Radii/topology derived from the manufacturer PDF; cross-checked against printed dims 17.6 (=2x8.8) and 2x17.6 diagonal (=2x8.8 through opposite corner pads).
 RotaryEncoder_PER561-P115-N0015	Bourns PER561-P115-N0015 rotary encoder, https://www.bourns.com/docs/product-datasheets/per56.pdf
 TRRS_MJ-4PP-9	TRRS 3.5mm audio jack, MJ-4PP-9
