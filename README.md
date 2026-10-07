@@ -8,11 +8,11 @@
 Marby_kbd_footprint/
 ├─ footprints/
 │  ├─ Marby_Switch.pretty/      キースイッチ（MX / Choc、ホットスワップ / はんだ付け）
-│  ├─ Marby_MCU.pretty/         マイコンボード・MCU（BLE Micro Pro, Pico, RP2040）
+│  ├─ Marby_MCU.pretty/         マイコンボード・MCU（BLE Micro Pro, Pico, RP2040, XIAO 変換）
 │  ├─ Marby_Input.pretty/       エンコーダー、ジョイスティック、光学センサー、タクトスイッチ
 │  ├─ Marby_Connector.pretty/   TRRS ジャック、FPC コネクター、ICSP ヘッダー、OLED 接続用ヘッダー
 │  ├─ Marby_Discrete.pretty/    ダイオード、LED
-│  └─ Marby_Mechanical.pretty/  ブレークアウェイタブ、フィデューシャル
+│  └─ Marby_Mechanical.pretty/  ブレークアウェイタブ、マウスバイト、フィデューシャル
 ├─ 3dmodels/
 │  ├─ keyswitch_model/          サブモジュール（キースイッチ・ソケット・スタビライザー）
 │  └─ keycap_model/             サブモジュール（キーキャップ）
@@ -104,6 +104,8 @@ git submodule update --remote
 | `joystick` | （削除） | — |
 
 上の表にないフットプリントは、名前を変えずにいずれかのライブラリへ移しています。
+
+`RotaryEncoder_MER1045-24-x`、`Breakaway_Mousebite`、`Board_XIAO_to_ProMicro` の 3 件は、旧構成に含まれていなかった作業途中のフットプリントを、新しい構成に合わせた名前で追加したものです（#15）。旧構成からの改名ではないので、上の表には載せていません。
 
 ## サブモジュールの出典とライセンス
 

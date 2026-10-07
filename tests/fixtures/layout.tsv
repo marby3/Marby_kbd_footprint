@@ -77,3 +77,6 @@ TRRS_MJ-4PP-9	Marby_Connector	TRRS_MJ-4PP-9
 XUNPU FPC-05F-12PH20	Marby_Connector	FPC_XUNPU_FPC-05F-12PH20
 microSwitch_6x6x7.3mm	Marby_Input	MicroSwitch_6x6x7.3mm
 tooling_hole	Marby_Mechanical	Fiducial_1.5mm
+RotaryEncoder_MER1045-24-x	Marby_Input	RotaryEncoder_MER1045-24-x
+Breakaway_Mousebite	Marby_Mechanical	Breakaway_Mousebite
+Board_XIAO_to_ProMicro	Marby_MCU	Board_XIAO_to_ProMicro

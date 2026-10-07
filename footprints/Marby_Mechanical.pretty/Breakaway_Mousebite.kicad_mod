@@ -1,0 +1,132 @@
+(footprint "Breakaway_Mousebite"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Mouse bites (perforated breakaway holes) for panel separation")
+	(property "Reference" "REF**"
+		(at 0 -2.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "e0447f70-b2ac-4b2c-b081-2c543949be5c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Breakaway_Mousebite"
+		(at 0 1 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "7d4293fb-eda4-4524-8539-f354bd2cf4a8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fc856e1c-e1ea-4be0-ac25-8fbf16b894fb")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fc87f814-9ece-42f8-afc8-ba5e42f94019")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -3.5 0)
+		(end 3.5 0)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "Dwgs.User")
+		(uuid "e931b478-b34c-4b41-a42e-97035bf3a3ec")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 2.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "d30cc073-d493-4194-b158-4230b0fdff52")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -3 0)
+		(size 0.6 0.6)
+		(drill 0.6)
+		(layers "*.Cu")
+		(uuid "3e24d53d-9fc0-40e4-b03c-b688eedbc419")
+	)
+	(pad "" np_thru_hole circle
+		(at -2 0)
+		(size 0.6 0.6)
+		(drill 0.6)
+		(layers "*.Cu")
+		(uuid "1bcde500-1772-4e1e-8609-df1f01fa53dd")
+	)
+	(pad "" np_thru_hole circle
+		(at -1 0)
+		(size 0.6 0.6)
+		(drill 0.6)
+		(layers "*.Cu")
+		(uuid "4c8ab376-c304-4efd-9e66-b3075eb4d5f0")
+	)
+	(pad "" np_thru_hole circle
+		(at 0 0)
+		(size 0.6 0.6)
+		(drill 0.6)
+		(layers "*.Cu")
+		(uuid "d7cd6114-f542-42ed-a713-5a1110bee52a")
+	)
+	(pad "" np_thru_hole circle
+		(at 1 0)
+		(size 0.6 0.6)
+		(drill 0.6)
+		(layers "*.Cu")
+		(uuid "c3e8db91-fe2e-432e-b9ed-012a46ac7d4a")
+	)
+	(pad "" np_thru_hole circle
+		(at 2 0)
+		(size 0.6 0.6)
+		(drill 0.6)
+		(layers "*.Cu")
+		(uuid "8f40542d-36fe-4224-9cd1-026ae8c74221")
+	)
+	(pad "" np_thru_hole circle
+		(at 3.001603 -0.002267)
+		(size 0.6 0.6)
+		(drill 0.6)
+		(layers "*.Cu")
+		(uuid "e152f574-83cf-4ab2-90d9-c23377212b77")
+	)
+	(embedded_fonts no)
+)
