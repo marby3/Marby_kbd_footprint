@@ -3,7 +3,7 @@
 KiCad 同梱の Python で実行する（pcbnew モジュールが必要）:
   "C:/Program Files/KiCad/10.0/bin/python.exe" tests/render_models.py <出力先> <フットプリント名>...
 
-- MX ホットスワップは裏面に置く前提のフットプリントなので、裏返して B 面に置く
+- MX と Choc のホットスワップは裏面に置く前提のフットプリントなので、裏返して B 面に置く
 - 上面（top）・下面（bottom）・側面（front）の 3 枚を書き出す
 - 3D モデルのパス変数 MARBY_KBD_DIR はリポジトリのルートに設定して描画する
 - kicad-cli は利用者の 3D ビューアー設定（THT を隠す等）に従うため、一時的な設定フォルダ
@@ -35,7 +35,7 @@ def board_with(name, path):
     fp = pcbnew.FootprintLoad(library_of(name), name)
     fp.SetPosition(pcbnew.VECTOR2I(0, 0))
     board.Add(fp)
-    if name.startswith("CherryMXSwitch_hotswap_"):
+    if name.startswith(("CherryMXSwitch_hotswap_", "ChocSwitch_hotswap_")):
         fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
     # フットプリントの外形より一回り大きい基板外形
     box = fp.GetBoundingBox(False)
