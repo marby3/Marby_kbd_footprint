@@ -74,7 +74,8 @@ SWAP = {"F.SilkS": "B.SilkS", "B.SilkS": "F.SilkS"}
 
 
 def norm(g):
-    """向きのない比較用に、線の端点と矩形の対角を並べ替える。"""
+    """向きのない比較用に、線の端点と矩形の対角を並べ替える。
+    上下反転で KiCad が線の始点・終点を入れ替えることがあるため、線の向きは区別しない（幾何としては同じ）。"""
     kind, layers, pts, xy, width = g
     p = dict(pts)
     if kind == "fp_line":
@@ -134,9 +135,17 @@ else:
            [f"[{name(p)}]" for p in solder if any(f(head[p]) != f(base[p]) for f in every)], len(solder))
 
 # 基準 4: Reference テキストが参考と同じ
-report("4 Reference が参考と同じ位置・層・向き",
-       [f"[{name(p)}]" for p in hotswap if K.texts(head[p])[:1] != K.texts(ref)[:1]
-        or "mirror" not in repr(K.prop(head[p], "Reference"))], len(hotswap))
+def reference(fp):
+    return [t for t in K.texts(fp) if t[0] == "Reference"]
+
+
+def value_at(fp):
+    return K.nums(K.child(K.prop(fp, "Value"), "at"), 3)
+
+
+report("4 Reference が参考と同じ位置・層・向き（Value の位置も参考にそろえる）",
+       [f"[{name(p)}]" for p in hotswap if reference(head[p]) != reference(ref)
+        or "mirror" not in repr(K.prop(head[p], "Reference")) or value_at(head[p]) != value_at(ref)], len(hotswap))
 
 # 基準 7: スイッチとソケットの配置値が 8 件で同じ
 placements = {}

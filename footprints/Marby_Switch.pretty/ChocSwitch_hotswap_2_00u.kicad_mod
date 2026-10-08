@@ -18,7 +18,7 @@
 		)
 	)
 	(property "Value" "ChocSwitch_hotswap_2_00u"
-		(at 0 8.2625 180)
+		(at 0 -8.2625 180)
 		(layer "Dwgs.User")
 		(uuid "4a7c79ce-50f9-4d4d-8e8a-27127affc536")
 		(effects

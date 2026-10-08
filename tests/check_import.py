@@ -65,7 +65,8 @@ IMPORTS = {  # 取り込み元の名前: (ライブラリ, 新しい名前, desc
                       "Seeed XIAO mounted on a Pro Micro footprint (adapter)"),
 }
 EXCLUDED = ("ChocSwitch_hotswap_1_00u_rev", "名称未設定")
-# #18 でホットスワップ 8 件は参考フットプリントのパッド（メッキありの楕円穴）に変えたので、はんだ付け 8 件だけを見る
+# #18 でホットスワップ 8 件は参考フットプリントのパッド（メッキありの楕円穴）に変えたので、はんだ付け 8 件だけを見る。
+# 基準 1 だけでなく基準 2（楕円穴以外が比較元と同一）も、はんだ付け 8 件が対象になる
 choc = [p for p in mods if os.path.basename(p).startswith("ChocSwitch_solder_")]
 
 
