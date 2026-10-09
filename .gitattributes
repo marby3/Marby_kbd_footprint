@@ -4,3 +4,4 @@
 # Shell scripts must keep LF to run under bash
 *.sh text eol=lf
 *.tsv text eol=lf
+*.ref text eol=lf

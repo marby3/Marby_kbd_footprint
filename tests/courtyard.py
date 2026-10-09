@@ -33,10 +33,11 @@ def is_switch(name):
 
 
 def expected_attr(name, fp):
-    """attr の集合。メッキ穴（ドリル 0.6mm 以上）があれば through_hole、なければ SMD パッドがあれば smd。"""
+    """attr の集合。番号付きのパッドに、メッキ穴（ドリル 0.6mm 以上）があれば through_hole、なければ SMD パッドがあれば smd。
+    番号のないパッド（取付穴や Choc ホットスワップのメッキありの楕円穴など）は部品の端子ではないので数えない。"""
     if name in MECHANICAL:
         return MECHANICAL[name]
-    pads = K.pads(fp)
+    pads = [p for p in K.pads(fp) if p[0] != ""]
     for p in pads:
         drills = [v for v in p[5] if isinstance(v, float)]
         if p[1] == "thru_hole" and drills and max(drills) >= THT_MIN_DRILL:
